@@ -2,11 +2,12 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const route = require("./src/route/route")
+require('dotenv').config()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-mongoose.connect("mongodb+srv://pika:pika@pika.fr6zl51.mongodb.net/wowtalent",{
+mongoose.connect(process.env.URL_string,{
     useNewUrlParser: true
 })
 .then( () => console.log("Database connected successfully"))
@@ -17,13 +18,7 @@ app.use('/', route)
 app.all('*', function (req, res) {
     return res
         .status(400)
-        .send("You Hit Wrong Api!!!, Plz Check !!!");
-});
-
-app.use(function (e, req, res, next) {
-    if (e.message === "You Hit Wrong Api!!!, Plz Check !!!") {
-       throw new Error(message);
-    }
+        .send("Welcome to Social Media----");
 });
 
 app.listen(process.env.PORT || 5000, function () {
